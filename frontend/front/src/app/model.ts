@@ -1,4 +1,4 @@
-export class UserLogin
+export class LoginRequest
 {
   username: string;
   password: string;
@@ -9,4 +9,12 @@ export class UserLogin
     this.password = password;
   }
 
+}
+
+export class JwtResponse
+{
+  accessToken: string;
+  type: string;
+  username: string;
+  authorities: string[];
 }
