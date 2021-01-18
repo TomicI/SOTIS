@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-21 col-md-17 col-lg-12 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Unos pitanja</h5>
+          <form class="form-signin" [formGroup]="addQuestion" (ngSubmit)="onSubmit()">
+            <div class="form-label-group">
+              <label for="inputQuestion">Tekst pitanja</label>
+              <textarea type="text" style="height:200px" ngModel id="inputQuestion" class="form-control text-wrap"  autofocus
+                        [formControlName]="'question'" name="question" required></textarea>
+              <div class="alert alert-danger"
+                   *ngIf="addQuestion.get('question').errors?.required && addQuestion.get('question').touched">Tekst pitanja je obavezan.
+              </div>
+            </div>
+            <div class="form-label-group">
+              <label for="inputAnswer">Odogovor</label>
+              <textarea type="answer" style="height:150px" id="inputAnswer" class="form-control" [formControlName]="'answer'"
+                     name="answer"></textarea>
+              <div class="alert alert-info"
+                   *ngIf="addQuestion.get('answer').updateOn">Odgovre unositi u formatu #TEKST*BROJ BODOVA*T/N. Ukoliko nema ponudjene odgovore, polje ostaviti prazno.<br> Primer: #Ovo je tacan odgovor.*10*T#Ovo je netacan odgovor.*-5*N
+              </div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block col-sm-3 float-right" type="submit">
+              Pregled
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

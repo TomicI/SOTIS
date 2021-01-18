@@ -18,3 +18,19 @@ export class JwtResponse
   username: string;
   authorities: string[];
 }
+
+export class Pitanje
+{
+  id: number;
+  redniBroj: number;
+  tekstPitanja: string;
+  odgovori: Odgovor[];
+}
+
+export class Odgovor
+{
+  id: number;
+  tekstOdgovora: string;
+  tacan: boolean;
+  brojBodova: number;
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
-import * as jwt from 'jsonwebtoken';
 import {JwtResponse, LoginRequest} from "../model";
 import {Observable} from "rxjs";
 

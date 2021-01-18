@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Odgovor
     protected boolean tacan;
     @Column
     protected int brojBodova;
+    @JsonIgnore
     @ManyToOne
     protected Pitanje pitanje;
 
@@ -61,4 +64,8 @@ public class Odgovor
     {
         this.pitanje = pitanje;
     }
+
+    public int getBrojBodova() { return brojBodova; }
+
+    public void setBrojBodova(int brojBodova) { this.brojBodova = brojBodova; }
 }
