@@ -2,6 +2,8 @@ package com.controller;
 
 import com.model.Odgovor;
 import com.model.Pitanje;
+import com.service.PitanjeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,45 +16,15 @@ import java.util.Set;
 @RequestMapping("/test")
 public class TestController
 {
+    @Autowired
+    private PitanjeService pitanjeService;
     @RequestMapping(value = "/addQuestion", method = RequestMethod.GET)
     public ResponseEntity<?> authenticateUser(@RequestParam(value="pitanje") String pitanje, @RequestParam(value="odgovori") String odgovori)
     {
-        Pitanje pp = new Pitanje();
-        Set<Odgovor> odgovoriList= null;
-        pp.setTekstPitanja(pitanje);
+        Pitanje pp = pitanjeService.savePitanje(pitanje, odgovori);
 
-        if (odgovori != "" && odgovori != null)
-        {
-            odgovoriList = new HashSet<Odgovor>();
-            try
-            {
-
-                String temp[] = odgovori.split("#");
-
-                for (int ii = 1; ii < temp.length; ii++)
-                {
-                    String temp2[] = temp[ii].split("\\*");
-
-                    Odgovor oo = new Odgovor();
-                    oo.setPitanje(pp);
-                    oo.setTekstOdgovora(temp2[0]);
-                    oo.setBrojBodova(Integer.parseInt(temp2[1]));
-                    if (temp2[2].equals("T"))
-                        oo.setTacan(true);
-                    else
-                        oo.setTacan(false);
-
-                    odgovoriList.add(oo);
-                }
-
-                pp.setOdgovori(odgovoriList);
-            }catch (Exception e)
-            {
-                return (ResponseEntity<?>) ResponseEntity.badRequest();
-            }
-
-
-        }
+        if (pp == null)
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
 
         return ResponseEntity.ok(pp);
     }

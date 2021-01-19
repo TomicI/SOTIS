@@ -32,6 +32,9 @@ export class AddQuestionFormComponent implements OnInit {
 
         console.log("DATA ");
         console.log(data);
+
+        localStorage.setItem('question', JSON.stringify(data));
+        window.location.replace('/setRegionsInQuestion');
       },
       error => {
         console.log("ERROR ");

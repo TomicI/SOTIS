@@ -9,8 +9,8 @@ import javax.persistence.*;
 public class Odgovor
 {
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @Column
     protected String tekstOdgovora;
     @Column
@@ -25,7 +25,7 @@ public class Odgovor
     {
     }
 
-    public long getId()
+    public Long getId()
     {
         return id;
     }

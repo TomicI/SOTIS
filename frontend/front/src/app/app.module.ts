@@ -12,12 +12,14 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AddQuestionFormComponent } from './add-question-form/add-question-form.component';
+import { QuestionPreviewComponent } from './question-preview/question-preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AddQuestionFormComponent
+    AddQuestionFormComponent,
+    QuestionPreviewComponent
   ],
   imports: [
     BrowserModule,

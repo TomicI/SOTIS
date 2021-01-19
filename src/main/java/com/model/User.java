@@ -13,8 +13,8 @@ import java.util.Set;
 public class User implements UserDetails
 {
     @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @Column
     protected String username;
     @Column

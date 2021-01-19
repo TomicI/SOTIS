@@ -8,7 +8,8 @@ import java.util.Set;
 public class Pitanje
 {
     @Id
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     @Column
     protected int redniBroj;
     @Column
@@ -20,7 +21,7 @@ public class Pitanje
     {
     }
 
-    public long getId() {return id; }
+    public Long getId() {return id; }
 
     public void setId(long id) { this.id = id; }
 
