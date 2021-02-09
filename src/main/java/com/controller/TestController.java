@@ -18,10 +18,25 @@ public class TestController
 {
     @Autowired
     private PitanjeService pitanjeService;
+
+
     @RequestMapping(value = "/addQuestion", method = RequestMethod.GET)
     public ResponseEntity<?> authenticateUser(@RequestParam(value="pitanje") String pitanje, @RequestParam(value="odgovori") String odgovori)
     {
         Pitanje pp = pitanjeService.savePitanje(pitanje, odgovori);
+
+        if (pp == null)
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+
+        return ResponseEntity.ok(pp);
+    }
+
+    @RequestMapping(value="/addRegions",method=RequestMethod.POST)
+    public ResponseEntity<?> updateStatus(@RequestBody Pitanje pitanje){
+
+        Pitanje pp = pitanjeService.addRegions(pitanje);
+
+        pp.toString();
 
         if (pp == null)
             return (ResponseEntity<?>) ResponseEntity.badRequest();

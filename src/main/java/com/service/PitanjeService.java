@@ -2,13 +2,17 @@ package com.service;
 
 import com.model.Odgovor;
 import com.model.Pitanje;
+import com.model.Regioni;
 import com.repository.OdgovorRepository;
 import com.repository.PitanjeRepository;
+import com.repository.RegioniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -21,6 +25,8 @@ public class PitanjeService
     @Autowired
     private OdgovorRepository odgovorRepository;
 
+    @Autowired
+    private RegioniRepository regioniRepository;
 
     public Pitanje savePitanje(String pitanje, String odgovori)
     {
@@ -65,5 +71,27 @@ public class PitanjeService
             }
         }
         return pitanjeRepository.save(pp);
+    }
+
+    public Pitanje addRegions (Pitanje pitanje)
+    {
+        Optional<Pitanje> p = pitanjeRepository.findById(pitanje.getId());
+
+        ArrayList<Regioni> regioni = new ArrayList<>(pitanje.getRegioni());
+
+        if (p.isPresent())
+        {
+            for(int ii = 0; ii < regioni.size(); ii++)
+            {
+                regioni.get(ii).setPitanjeId(p.get().getId());
+                regioni.set(ii, regioniRepository.save(regioni.get(ii)));
+            }
+            pitanje.setRegioni(new HashSet<>(regioni));
+            pitanje = pitanjeRepository.save(pitanje);
+        }
+        else
+            return null;
+
+        return pitanje;
     }
 }

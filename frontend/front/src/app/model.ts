@@ -25,6 +25,7 @@ export class Pitanje
   redniBroj: number;
   tekstPitanja: string;
   odgovori: Odgovor[];
+  regioni: Regioni[];
 }
 
 export class Odgovor
@@ -33,4 +34,22 @@ export class Odgovor
   tekstOdgovora: string;
   tacan: boolean;
   brojBodova: number;
+}
+
+export class Regioni
+{
+  id: number;
+  x0: number;
+  y0: number;
+  width: number;
+  height: number;
+  pitanje: Pitanje;
+
+  constructor(x0: number, y0: number, width: number, height: number)
+  {
+    this.x0 = x0;
+    this.y0 = y0;
+    this.width = width;
+    this.height = height;
+  }
 }

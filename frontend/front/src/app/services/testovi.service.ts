@@ -18,12 +18,18 @@ export class TestoviService {
   constructor(private router: Router,
               private http: HttpClient) { }
 
-  addQuestion(pitanje: string, odgovori: string): Observable<any> {
+  addQuestion(pitanje: string, odgovori: string): Observable<any>
+  {
     let param = new HttpParams();
 
     param = param.append('pitanje',pitanje);
     param = param.append('odgovori',odgovori);
 
     return this.http.get<any>(this.baseUrl + 'addQuestion', {params : param});
+  }
+
+  addRegions(object): Observable<any>
+  {
+    return this.http.post<any>(this.baseUrl + 'addRegions', object);
   }
 }

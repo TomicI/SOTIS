@@ -10,15 +10,15 @@ public class Regioni
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     @Column
-    protected double x1;
+    protected Integer x0;
     @Column
-    protected double y1;
+    protected Integer y0;
     @Column
-    protected double x2;
+    protected Integer width;
     @Column
-    protected double y2;
-    @ManyToOne
-    protected Pitanje pitanje;
+    protected Integer height;
+    @Column
+    protected Long pitanjeId;
 
     public Regioni()
     {
@@ -26,7 +26,10 @@ public class Regioni
 
     public long getId()
     {
-        return id;
+        if (id != null)
+            return id;
+        else
+            return 0;
     }
 
     public void setId(long id)
@@ -34,53 +37,53 @@ public class Regioni
         this.id = id;
     }
 
-    public double getX1()
+    public Integer getX0()
     {
-        return x1;
+        return x0;
     }
 
-    public void setX1(double x1)
+    public void setX0(Integer x1)
     {
-        this.x1 = x1;
+        this.x0 = x1;
     }
 
-    public double getY1()
+    public Integer getY0()
     {
-        return y1;
+        return y0;
     }
 
-    public void setY1(double y1)
+    public void setY0(Integer y1)
     {
-        this.y1 = y1;
+        this.y0 = y1;
     }
 
-    public double getX2()
+    public Integer getWidth()
     {
-        return x2;
+        return width;
     }
 
-    public void setX2(double x2)
+    public void setWidth(Integer x2)
     {
-        this.x2 = x2;
+        this.width = x2;
     }
 
-    public double getY2()
+    public Integer getHeight()
     {
-        return y2;
+        return height;
     }
 
-    public void setY2(double y2)
+    public void setHeight(Integer y2)
     {
-        this.y2 = y2;
+        this.height = y2;
     }
 
-    public Pitanje getPitanje()
+    public Long getPitanjeId()
     {
-        return pitanje;
+        return pitanjeId;
     }
 
-    public void setPitanje(Pitanje pitanje)
+    public void setPitanjeId(Long pitanje)
     {
-        this.pitanje = pitanje;
+        this.pitanjeId = pitanje;
     }
 }

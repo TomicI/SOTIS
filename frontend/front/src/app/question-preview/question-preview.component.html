@@ -1,1 +1,50 @@
-<p>question-preview works!</p>
+<div >
+
+  <div style="position: absolute; height: 100%; width: 100%;" >
+    <canvas id="canvas" (mousedown)="onMouseDown($event.clientX, $event.clientY)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event.clientX, $event.clientY)" height="{{this.heightW}}" width="{{this.widthW}}" >
+
+    </canvas>
+  </div>
+  <div  style="align-content: center">
+    <div class="card-body">y
+      <h5 class="card-title text-center">{{this.pitanje.tekstPitanja}}</h5>
+      <div *ngIf="this.pitanje.odgovori!=null" style="align-content: center">
+        <div *ngFor="let odg of this.pitanje.odgovori; let i = index" >
+          <div>{{i+1}}) {{odg.tekstOdgovora}} </div>
+        </div>
+      </div>
+      <div *ngIf="this.pitanje.odgovori==null" style="alignment: center">
+        <div style="alignment: center"><label for="inputAnswer">Odogovor: </label></div>
+        <textarea style="height:50%; width: 70%; alignment: center" id="inputAnswer"
+                  name="answer"></textarea>
+      </div>
+    </div>
+    <div>
+      <button class = "btn-light" (click)="done()" style="position: absolute">Završi</button>
+    </div>
+  </div>
+  <!--
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm-21 col-md-17 col-lg-12 mx-auto">
+        <div class="card card-signin my-5" >
+          <div class="card-body">
+            <h5 class="card-title text-center">{{this.pitanje.tekstPitanja}}</h5>
+            <div *ngIf="this.pitanje.odgovori!=null">
+              <div *ngFor="let odg of this.pitanje.odgovori; let i = index" >
+                <div>{{i+1}}) {{odg.tekstOdgovora}} </div>
+              </div>
+            </div>
+            <div *ngIf="this.pitanje.odgovori==null">
+              <div><label for="inputAnswer">Odogovor: </label></div>
+              <textarea type="answer" style="height:150px" id="inputAnswer"
+                        name="answer"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  -->
+</div>

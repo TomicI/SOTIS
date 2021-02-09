@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,6 +18,8 @@ public class Pitanje
     protected String tekstPitanja;
     @OneToMany
     protected Set<Odgovor> odgovori;
+    @OneToMany
+    protected Set<Regioni> regioni;
 
     public Pitanje()
     {
@@ -50,5 +54,19 @@ public class Pitanje
     public void setOdgovori(Set<Odgovor> odgovori)
     {
         this.odgovori = odgovori;
+    }
+
+    public Set<Regioni> getRegioni() { return regioni; }
+
+    public void setRegioni(Set<Regioni> regioni) { this.regioni = regioni; }
+
+    @Override
+    public String toString() {
+        return "Pitanje{" +
+                "id=" + id +
+                ", redniBroj=" + redniBroj +
+                ", tekstPitanja='" + tekstPitanja + '\'' +
+                ", regioni= " + regioni.size() == null ? "0" : String.valueOf(regioni.size() +
+                '}');
     }
 }
