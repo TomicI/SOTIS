@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
+import ch.qos.logback.core.CoreConstants;
 import com.security.JWToken;
 import com.security.JwtResponse;
 import org.apache.commons.logging.Log;

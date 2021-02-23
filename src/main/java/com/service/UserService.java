@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +35,9 @@ public class UserService
     @Autowired
     private JWToken jwtProvider;
 
-    public String getCurrentUser()
+    public User getCurrentUser(String username)
     {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
+        return userRepository.findByUsername(username).get();
     }
 
     public boolean checkIfEmailExists(String email)
@@ -78,8 +79,7 @@ public class UserService
 
         if (user.isPresent())
         {
-            if (user.get().getPassword().equals(loginRequest.getPassword()))
-                return true;
+            return true;
         }
 
         return false;
@@ -96,13 +96,12 @@ public class UserService
     }
 
     public JwtResponse authenticateUser(LoginRequest loginRequest){
-
-        System.out.println("LOGIN " + loginRequest.getUsername() + " " + loginRequest.getPassword());
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        System.out.println("Auth set " + authentication.getName());
 
         String jwt = jwtProvider.generateJWToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

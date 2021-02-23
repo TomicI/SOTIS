@@ -53,3 +53,30 @@ export class Regioni
     this.height = height;
   }
 }
+
+export class User
+{
+  username: string;
+  password: string;
+  id: number;
+
+  constructor(username: string, password: string, id: number)
+  {
+    this.username = username;
+    this.password = password;
+    this.id = id;
+  }
+
+}
+
+export class Test
+{
+  brojOstvarenihBodova: number;
+  pitanja: Pitanje[];
+  kreator: User;
+
+  constructor(pitanja: Pitanje[])
+  {
+    this.pitanja = pitanja;
+  }
+}

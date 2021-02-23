@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {JwtResponse, LoginRequest} from "../model";
+import {JwtResponse, LoginRequest, Pitanje, User} from "../model";
 import {Observable} from "rxjs";
 
 const httpOptions = {
@@ -30,4 +30,13 @@ export class AuthServiceService {
     return this.http.post<JwtResponse>(this.baseUrl + 'signup', user, httpOptions);
   }
 */
+
+  getCUser(username: string): Promise<User>
+  {
+    let param = new HttpParams();
+
+    param = param.append('username', username);
+
+    return this.http.get<User>(this.baseUrl + 'getCUser', {params : param}).toPromise();
+  }
 }

@@ -1,0 +1,13 @@
+<table class="table table-light">
+  <thead>
+    <th>Pitanje</th>
+    <th>Dodaj</th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let qq of questions, let ii = index" style="width: 300px">
+    <td>{{qq.tekstPitanja}}</td>
+    <td><input class="form-check-input" type="checkbox" [(ngModel)]="isChecked[ii]" (change)="dodaj(qq, isChecked[ii]?'A':'B')"></td>
+  </tr>
+  </tbody>
+</table>
+<button class="btn-light" (click)="createTest()">Create test</button>

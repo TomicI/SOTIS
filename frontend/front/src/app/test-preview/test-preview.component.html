@@ -1,0 +1,15 @@
+<table class="table table-light">
+  <thead>
+  <th>Pitanje</th>
+  <th></th>
+  <th></th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let qq of questions, let ii = index" style="width: 300px">
+    <td>{{qq.tekstPitanja}}</td>
+    <td><button (click)="up(qq, ii)">Gore</button></td>
+    <td><button (click)="down(qq, ii)">Dole</button></td>
+  </tr>
+  </tbody>
+</table>
+<button class="btn-light" (click)="createTest()">Create test</button>

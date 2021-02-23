@@ -27,17 +27,21 @@ export class LoginComponent implements OnInit {
               private authService: AuthServiceService,
               private tokenStorage: TokenService) { }
 
-  ngOnInit(): void {
-
-    this.loginForm = this.formBuilder.group({
-        username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
-        password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]
-     });
+  ngOnInit(): void
+  {
 
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getAuthorities();
+      window.location.replace('/profile');
+    } else
+    {
+      this.loginForm = this.formBuilder.group(
+        {
+          username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
+          password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]
+        });
     }
+
   }
 
   // tslint:disable-next-line:typedef
@@ -60,12 +64,11 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getAuthorities();
-//      windows.location.reload();
+//      this.roles = this.tokenStorage.getAuthorities();
+        window.location.replace('/profile');
       },
       error => {
         console.log(error);
-        this.errorMessage = error.error.message;
         this.isLoginFailed = true;
       }
     );

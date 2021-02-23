@@ -16,6 +16,8 @@ public class Pitanje
     protected int redniBroj;
     @Column
     protected String tekstPitanja;
+    @Column
+    protected Long creatorId;
     @OneToMany
     protected Set<Odgovor> odgovori;
     @OneToMany
@@ -59,6 +61,10 @@ public class Pitanje
     public Set<Regioni> getRegioni() { return regioni; }
 
     public void setRegioni(Set<Regioni> regioni) { this.regioni = regioni; }
+
+    public Long getCreatorId() { return creatorId; }
+
+    public void setCreatorId (Long creatorId) { this.creatorId = creatorId; }
 
     @Override
     public String toString() {

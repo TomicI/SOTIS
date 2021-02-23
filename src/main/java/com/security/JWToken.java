@@ -29,8 +29,6 @@ public class JWToken {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        System.out.println(userDetails.getUsername());
-
         return Jwts.builder()
                 .setIssuer(appname)
                 .setSubject((userDetails.getUsername()))

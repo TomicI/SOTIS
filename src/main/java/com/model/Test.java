@@ -28,7 +28,10 @@ public class Test
 
     public long getId()
     {
-        return id;
+        if (id != null)
+            return id;
+        else
+            return 0;
     }
 
     public void setId(long id) { this.id = id; }
@@ -58,4 +61,12 @@ public class Test
     public User getKreator() { return kreator; }
 
     public void setKreator(User kreator) { this.kreator = kreator; }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "pitanja=" + pitanja.size() +
+                ", kreator=" + kreator.getUsername() +
+                '}';
+    }
 }

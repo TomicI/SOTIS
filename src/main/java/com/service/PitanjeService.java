@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -93,5 +90,23 @@ public class PitanjeService
             return null;
 
         return pitanje;
+    }
+
+    public List<Pitanje> getQuestions(Long creatorId)
+    {
+        List<Pitanje> list = new ArrayList<>();
+
+        for (Pitanje pp : pitanjeRepository.findByCreatorId(creatorId))
+        {
+            if (pp.getRedniBroj() > 0)
+            {
+                list.add(pp);
+            }
+        }
+
+        if(list.isEmpty())
+            return null;
+
+        return list;
     }
 }
