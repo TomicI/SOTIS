@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,6 +28,7 @@ public class User implements UserDetails
     protected String email;
     @Column
     protected String role;
+    @JsonIgnore
     @OneToMany
     protected Set<Test> kreiraniTestovi;
     @OneToMany

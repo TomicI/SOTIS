@@ -98,7 +98,7 @@ public class PitanjeService
 
         for (Pitanje pp : pitanjeRepository.findByCreatorId(creatorId))
         {
-            if (pp.getRedniBroj() > 0)
+            if (pp.getRedniBroj() == 0)
             {
                 list.add(pp);
             }

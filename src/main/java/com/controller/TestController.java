@@ -61,8 +61,6 @@ public class TestController
     @RequestMapping(value="/createTest",method=RequestMethod.POST)
     public ResponseEntity<?> createTest(@RequestBody Test test){
 
-        System.out.println("Test " + test.toString());
-
         test = testService.saveTest(test);
 
         if (test == null)

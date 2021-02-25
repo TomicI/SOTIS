@@ -42,6 +42,9 @@ public class TestService
 
         test = testRepository.save(test);
 
+        cUser.getKreiraniTestovi().add(test);
+        userService.saveUser(cUser);
+
         return test;
     }
 }
