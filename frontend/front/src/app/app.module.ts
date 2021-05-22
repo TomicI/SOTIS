@@ -18,6 +18,9 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateTestComponent } from './create-test/create-test.component';
 import { TestPreviewComponent } from './test-preview/test-preview.component';
+import { TestComponent } from './test/test.component';
+import { TestReviewAllComponent } from './test-review-all/test-review-all.component';
+import { TestReviewComponent } from './test-review/test-review.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { TestPreviewComponent } from './test-preview/test-preview.component';
     ProfileComponent,
     NavigationComponent,
     CreateTestComponent,
-    TestPreviewComponent
+    TestPreviewComponent,
+    TestComponent,
+    TestReviewAllComponent,
+    TestReviewComponent
   ],
   imports: [
     BrowserModule,

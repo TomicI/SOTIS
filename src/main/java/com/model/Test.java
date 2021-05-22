@@ -17,8 +17,6 @@ public class Test
     protected Date datum;
     @Column
     protected int ukupanBrojBodova;
-    @Column
-    protected int brojOstvarenihBodova;
     @OneToMany
     protected Set<Pitanje> pitanja;
     @ManyToOne
@@ -51,10 +49,6 @@ public class Test
     public int getUkupanBrojBodova() { return ukupanBrojBodova; }
 
     public void setUkupanBrojBodova(int ukupanBrojBodova) { this.ukupanBrojBodova = ukupanBrojBodova; }
-
-    public int getBrojOstvarenihBodova() { return brojOstvarenihBodova; }
-
-    public void setBrojOstvarenihBodova(int brojOstvarenihBodova) { this.brojOstvarenihBodova = brojOstvarenihBodova; }
 
     public Set<Pitanje> getPitanja(){ return pitanja; }
 

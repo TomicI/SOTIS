@@ -1,0 +1,20 @@
+<div  style="align-content: center">
+  <div class="card-body">
+    <h5 class="card-title text-center">{{this.question.tekstPitanja}}</h5>
+    <div *ngIf="this.question.odgovori!=null && this.question.odgovori.length > 1" style="align-content: center">
+      <div *ngFor="let odg of this.question.odgovori; let i = index" >
+        <div><input class="form-check-input" type="checkbox" [(ngModel)]="isChecked[i]" (change)="dodaj(i, odg, isChecked[i]?'A':'B')">{{i+1}}) {{odg.tekstOdgovora}} </div>
+      </div>
+    </div>
+    <div *ngIf="this.nemaOdg == true" style="alignment: center">
+      <div style="alignment: center"><label for="inputAnswer">Odogovor: </label></div>
+      <textarea style="height:50%; width: 70%; alignment: center" id="inputAnswer"
+                name="answer" [(ngModel)]="tekstOdgovora"></textarea>
+    </div>
+  </div>
+  <div>
+    <button class = "btn-light" (click)="back()" style="position: relative;">Nazad</button>
+    <button class = "btn-light" (click)="next()" style="position: relative">Napred</button>
+    <button class = "btn-light" (click)="finish()" style="position: relative">Zavrsi</button>
+  </div>
+</div>

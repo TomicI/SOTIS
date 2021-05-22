@@ -31,8 +31,9 @@ public class User implements UserDetails
     @JsonIgnore
     @OneToMany
     protected Set<Test> kreiraniTestovi;
+    @JsonIgnore
     @OneToMany
-    protected Set<Test> reseniTestovi;
+    protected Set<ReseniTest> reseniTestovi;
 
     public User()
     {
@@ -143,13 +144,13 @@ public class User implements UserDetails
 
     public Set<Test> getKreiraniTestovi() { return kreiraniTestovi; }
 
-    public void addResenTest (Test test)
+    public void addResenTest (ReseniTest test)
     {
         if (reseniTestovi == null)
-            reseniTestovi = new HashSet<Test>();
+            reseniTestovi = new HashSet<ReseniTest>();
 
         reseniTestovi.add(test);
     }
 
-    public Set<Test> getReseniTestovi() { return reseniTestovi; }
+    public Set<ReseniTest> getReseniTestovi() { return reseniTestovi; }
 }

@@ -21,6 +21,8 @@ public class Odgovor
     @ManyToOne
     protected Pitanje pitanje;
 
+    protected Long pid;
+
     public Odgovor()
     {
     }
@@ -68,4 +70,15 @@ public class Odgovor
     public int getBrojBodova() { return brojBodova; }
 
     public void setBrojBodova(int brojBodova) { this.brojBodova = brojBodova; }
+
+    public Long getPid() {
+
+        if (pitanje != null)
+            return pitanje.getId();
+        else
+            return 0l;
+    }
+
+    public void setPid(Long pid) { this.pid = pid; }
+
 }

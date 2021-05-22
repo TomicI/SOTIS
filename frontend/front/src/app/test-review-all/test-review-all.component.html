@@ -1,0 +1,14 @@
+<table class="table table-light">
+  <thead>
+  <th>Ucenik</th>
+  <th>Broj bodova</th>
+  <th></th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rt of reseniTestovi, let ii = index" style="width: 300px">
+    <td>{{rt.ucenik.username}}</td>
+    <td>{{rt.brojOstvarenihBodova}}</td>
+    <td><button (click)="pregled(ii)">Pregled</button>></td>
+  </tr>
+  </tbody>
+</table>

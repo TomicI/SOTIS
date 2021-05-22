@@ -1,0 +1,23 @@
+<table class="table table-light">
+  <thead>
+  <th>Redni broj</th>
+  <th>Pitanje</th>
+  <th>Odgovor</th>
+  <th>Broj bodova</th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pp of test.test.pitanja, let ii = index" style="width: 300px">
+    <td>{{ii+1}}</td>
+    <td>{{pp.tekstPitanja}}</td>
+    <td>{{getOdgovori(pp.id)}}</td>
+    <div *ngIf="pp.odgovori.length == 0">
+      <td><input type = text [(ngModel)]="brojBodova[ii]"/></td>
+    </div>
+    <div *ngIf="pp.odgovori.length > 0">
+      <td>{{getBodovi(pp.id)}}</td>
+    </div>
+  </tr>
+  </tbody>
+</table>
+
+<button (click)="finish()">Zavrsi</button>

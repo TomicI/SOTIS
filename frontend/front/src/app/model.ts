@@ -1,3 +1,5 @@
+import {Timestamp} from "rxjs";
+
 export class LoginRequest
 {
   username: string;
@@ -34,6 +36,7 @@ export class Odgovor
   tekstOdgovora: string;
   tacan: boolean;
   brojBodova: number;
+  pid : number;
 }
 
 export class Regioni
@@ -71,12 +74,40 @@ export class User
 
 export class Test
 {
-  brojOstvarenihBodova: number;
+  id : number;
   pitanja: Pitanje[];
   kreator: User;
 
   constructor(pitanja: Pitanje[])
   {
     this.pitanja = pitanja;
+  }
+}
+
+export class ReseniTest
+{
+  brojOstvarenihBodova: number;
+  test: Test;
+  ucenik: User;
+  odgovorSet: Odgovor[];
+  pitanjeRecords: PitanjeTimestamp[];
+
+  constructor(test: Test, ucenik: User)
+  {
+    this.test = test;
+    this.ucenik = ucenik;
+  }
+}
+
+export class PitanjeTimestamp
+{
+  timestampStart: number;
+  timestampEnd: number;
+  pitanje: Pitanje;
+
+  constructor(timestampStart: number, pitanje: Pitanje)
+  {
+    this.timestampStart = timestampStart;
+    this.pitanje = pitanje;
   }
 }

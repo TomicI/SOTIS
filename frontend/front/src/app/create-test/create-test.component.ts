@@ -59,4 +59,5 @@ export class CreateTestComponent implements OnInit {
     localStorage.setItem("test", JSON.stringify(this.questionsAdded));
     window.location.replace('/test_preview');
   }
+
 }

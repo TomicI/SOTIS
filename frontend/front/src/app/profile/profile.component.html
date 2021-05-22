@@ -1,1 +1,15 @@
 <button (click)="createTest()">Create test</button>
+<div *ngIf="testovi.length > 0">
+  <table class="table table-light">
+    <thead>
+    <th>Test id</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tt of testovi, let ii = index" style="width: 300px">
+      <td>{{tt.id}}</td>
+      <td><button (click)="pregled(tt.id)">Pregled</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

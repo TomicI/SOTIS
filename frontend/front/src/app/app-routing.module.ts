@@ -6,6 +6,9 @@ import { QuestionPreviewComponent } from "./question-preview/question-preview.co
 import {ProfileComponent} from "./profile/profile.component";
 import {CreateTestComponent} from "./create-test/create-test.component";
 import {TestPreviewComponent} from "./test-preview/test-preview.component";
+import {TestComponent} from "./test/test.component";
+import {TestReviewAllComponent} from "./test-review-all/test-review-all.component";
+import {TestReviewComponent} from "./test-review/test-review.component";
 
 const routes: Routes =
 [
@@ -32,7 +35,20 @@ const routes: Routes =
   {
     path: 'test_preview',
     component: TestPreviewComponent
+  },
+  {
+    path: 'test/:id',
+    component: TestComponent
+  },
+  {
+    path: 'tests_review',
+    component: TestReviewAllComponent
+  },
+  {
+    path: 'test_review',
+    component: TestReviewComponent
   }
+
 ];
 
 @NgModule({
