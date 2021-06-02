@@ -1,0 +1,28 @@
+<div>
+  <div style="position: absolute; height: 100%; width: 100%;" >
+    <canvas id="canvas" height="{{this.heightW}}" width="{{this.widthW}}" >
+
+    </canvas>
+  </div>
+
+  <div  style="align-content: center">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{this.pitanje.tekstPitanja}}</h5>
+      <div *ngIf="this.pitanje.odgovori!=null" style="align-content: center">
+        <div *ngFor="let odg of this.pitanje.odgovori; let i = index" >
+          <div>{{i+1}}) {{odg.tekstOdgovora}} </div>
+        </div>
+      </div>
+      <div *ngIf="this.pitanje.odgovori==null" style="alignment: center">
+        <div style="alignment: center"><label for="inputAnswer">Odogovor: </label></div>
+        <textarea style="height:50%; width: 70%; alignment: center" id="inputAnswer"
+                  name="answer"></textarea>
+      </div>
+    </div>
+    <div>
+      <button class = "btn-light" (click)="back()" style="position: relative">Nazad</button>
+      <button class = "btn-light" (click)="next()" style="position: relative">Napred</button>
+      <button class = "btn-light" (click)="done()" style="position: relative">Zavrsi</button>
+    </div>
+  </div>
+</div>

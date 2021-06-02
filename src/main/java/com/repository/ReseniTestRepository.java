@@ -11,4 +11,5 @@ public interface ReseniTestRepository extends JpaRepository<ReseniTest, Long>
 {
     List<ReseniTest> findByTestIdAndUcenikId(Long testId, Long ucenikId);
     List<ReseniTest> findByTestId(Long testId);
+    List<ReseniTest> findByUcenikId(Long ucenikId);
 }

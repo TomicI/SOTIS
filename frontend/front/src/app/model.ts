@@ -86,6 +86,7 @@ export class Test
 
 export class ReseniTest
 {
+  id: number;
   brojOstvarenihBodova: number;
   test: Test;
   ucenik: User;
@@ -110,4 +111,14 @@ export class PitanjeTimestamp
     this.timestampStart = timestampStart;
     this.pitanje = pitanje;
   }
+}
+
+export class AnalizaPogleda
+{
+  x: number;
+  y: number;
+  pitanje: Pitanje;
+  reseniTest: ReseniTest;
+
+  constructor() { }
 }

@@ -1,5 +1,6 @@
-<button (click)="createTest()">Create test</button>
+<button (click)="createTest()">Novi test</button>
 <div *ngIf="testovi.length > 0">
+  <h2>Kreirani testovi</h2>
   <table class="table table-light">
     <thead>
     <th>Test id</th>
@@ -9,6 +10,21 @@
     <tr *ngFor="let tt of testovi, let ii = index" style="width: 300px">
       <td>{{tt.id}}</td>
       <td><button (click)="pregled(tt.id)">Pregled</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="reseniTestovi.length > 0">
+  <h2>Reseni testovi</h2>
+  <table class="table table-light">
+    <thead>
+    <th>Test id</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tt of reseniTestovi, let ii = index" style="width: 300px">
+      <td>{{tt.test.id}}</td>
+      <td>{{tt.brojOstvarenihBodova}}</td>
     </tr>
     </tbody>
   </table>

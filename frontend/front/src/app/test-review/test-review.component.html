@@ -6,7 +6,7 @@
   <th>Broj bodova</th>
   </thead>
   <tbody>
-  <tr *ngFor="let pp of test.test.pitanja, let ii = index" style="width: 300px">
+  <tr *ngFor="let pp of reseniTest.test.pitanja, let ii = index" style="width: 300px">
     <td>{{ii+1}}</td>
     <td>{{pp.tekstPitanja}}</td>
     <td>{{getOdgovori(pp.id)}}</td>

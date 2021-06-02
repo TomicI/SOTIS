@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TestoviService} from "../services/testovi.service";
 import {AuthServiceService} from "../services/auth-service.service";
 import {TokenService} from "../services/token.service";
-import {User, Test} from "../model";
+import {User, Test, ReseniTest} from "../model";
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
 
   user : User;
   testovi : Test[];
+  reseniTestovi: ReseniTest[];
 
   constructor(private testoviService : TestoviService,
               private authService: AuthServiceService,
@@ -34,9 +35,16 @@ export class ProfileComponent implements OnInit {
 
     this.testoviService.getAll(this.tokenStorage.getUsername()).then( data =>
     {
-        console.log("datadata");
+        console.log("data testovi");
         console.log(data);
         this.testovi = data;
+    });
+
+    this.testoviService.getAllUradjene(this.tokenStorage.getUsername()).then( data =>
+    {
+      console.log("data reseni ");
+      console.log(data);
+      this.reseniTestovi = data;
     });
   }
 

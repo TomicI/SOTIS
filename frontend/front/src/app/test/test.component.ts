@@ -48,9 +48,13 @@ export class TestComponent implements OnInit {
 
       console.log(`Ovdeeeeeeee` + this.ii);
 
+
       if (this.reseniTest.pitanjeRecords == null)
       {
         this.reseniTest.pitanjeRecords = new Array();
+        var pitanjeTimestamp: PitanjeTimestamp = new PitanjeTimestamp(Date.now(), this.question);
+
+        this.reseniTest.pitanjeRecords.push(pitanjeTimestamp);
       }
     }
     else
@@ -172,10 +176,6 @@ export class TestComponent implements OnInit {
 
     this.reseniTest.pitanjeRecords.push(pitanjeTimestamp);
 
-    console.log("svi ");
-    console.log(this.reseniTest.pitanjeRecords);
-
-    alert("STOp")
   }
 
   check()
@@ -190,16 +190,12 @@ export class TestComponent implements OnInit {
 
       if (this.question.odgovori.length == 1)
       {
-        this.test.pitanja[this.ii].odgovori[0] = odg;
-        alert("1");
+        this.test.pitanja[this.ii].odgovori[0].tekstOdgovora = odg.tekstOdgovora;
       }
       else
       {
         this.test.pitanja[this.ii].odgovori.push(odg);
-        alert("else");
       }
-
-
     }
     this.reseniTest.test = this.test;
     localStorage.setItem("test", JSON.stringify(this.reseniTest));
@@ -207,6 +203,7 @@ export class TestComponent implements OnInit {
 
   finish()
   {
+    this.saveTimestamp();
     this.check();
 
     for (let i = 0; i < this.test.pitanja.length; i++)

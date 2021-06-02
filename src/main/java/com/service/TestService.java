@@ -34,6 +34,9 @@ public class TestService {
     @Autowired
     private EyetrackerRecordRepository eyetrackerRecordRepository;
 
+    @Autowired
+    private AnalizaPogledaRepository analizaPogledaRepository;
+
     public Test saveTest(Test test) {
         Set<Pitanje> pitanjeSet = new HashSet<>();
         User cUser = userService.getCurrentUser(test.getKreator().getUsername());
@@ -116,6 +119,8 @@ public class TestService {
             }
 
             reseniTest = reseniTestRepository.save(reseniTest);
+
+            analizeTest(reseniTest.getId());
 
             return reseniTest;
         }
@@ -213,7 +218,7 @@ public class TestService {
         return records;
     }
 
-    public void analizeTest(Long reseniTestId)
+    private void analizeTest(Long reseniTestId)
     {
         Optional<ReseniTest> reseniTest = reseniTestRepository.findById(reseniTestId);
         int nL = 0;
@@ -234,6 +239,8 @@ public class TestService {
                             {
                                 if (eyetrackerRecord.getLeftEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getLeftEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getLeftEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getLeftEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get());
+                                    analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nL++;
                                 }
                                 else
@@ -246,6 +253,8 @@ public class TestService {
 
                                 if (eyetrackerRecord.getRightEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getRightEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getRightEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getRightEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getRightEyeX(), eyetrackerRecord.getRightEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get());
+                                    analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nR++;
                                 }
                                 else
@@ -264,5 +273,20 @@ public class TestService {
 
         System.out.println("Left Eye in region " + nL);
         System.out.println("Right Eye in region " + nR);
+    }
+
+    public List<AnalizaPogleda> getRegions(Long reseniTestId)
+    {
+ //     analizeTest(reseniTestId);
+        return analizaPogledaRepository.findByReseniTestId(reseniTestId);
+    }
+
+    public List<ReseniTest> getUradjene(User u) {
+        return reseniTestRepository.findByUcenikId(u.getId());
+    }
+
+    public ReseniTest getReseniTest (Long reseniTestId)
+    {
+        return reseniTestRepository.findById(reseniTestId).get();
     }
 }

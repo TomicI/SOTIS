@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TestoviService} from "../services/testovi.service";
+import {TokenService} from "../services/token.service";
 
 @Component({
   selector: 'app-add-question-form',
@@ -14,7 +15,8 @@ export class AddQuestionFormComponent implements OnInit {
 
   constructor(private route: Router,
               private formBuilder: FormBuilder,
-              private testoviService: TestoviService) { }
+              private testoviService: TestoviService,
+              private tokenService: TokenService) { }
 
   ngOnInit(): void {
     this.addQuestion = this.formBuilder.group({
@@ -27,7 +29,7 @@ export class AddQuestionFormComponent implements OnInit {
 
     console.log(this.addQuestion);
 
-    this.testoviService.addQuestion(this.addQuestion.get('question').value, this.addQuestion.get('answer').value).subscribe(
+    this.testoviService.addQuestion(this.addQuestion.get('question').value, this.addQuestion.get('answer').value, this.tokenService.getUsername()).subscribe(
       data => {
 
         console.log("DATA ");

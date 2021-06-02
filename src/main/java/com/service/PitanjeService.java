@@ -3,6 +3,7 @@ package com.service;
 import com.model.Odgovor;
 import com.model.Pitanje;
 import com.model.Regioni;
+import com.model.User;
 import com.repository.OdgovorRepository;
 import com.repository.PitanjeRepository;
 import com.repository.RegioniRepository;
@@ -25,11 +26,14 @@ public class PitanjeService
     @Autowired
     private RegioniRepository regioniRepository;
 
-    public Pitanje savePitanje(String pitanje, String odgovori)
+    private UserService userService;
+
+    public Pitanje savePitanje(String pitanje, String odgovori, User user)
     {
         Pitanje pp = new Pitanje();
         Set<Odgovor> odgovoriList= null;
         pp.setTekstPitanja(pitanje);
+        pp.setCreatorId(user.getId());
 
         pp = pitanjeRepository.save(pp);
 

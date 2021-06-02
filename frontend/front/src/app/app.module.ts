@@ -21,6 +21,7 @@ import { TestPreviewComponent } from './test-preview/test-preview.component';
 import { TestComponent } from './test/test.component';
 import { TestReviewAllComponent } from './test-review-all/test-review-all.component';
 import { TestReviewComponent } from './test-review/test-review.component';
+import { AnalizaPogledaComponent } from './analiza-pogleda/analiza-pogleda.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TestReviewComponent } from './test-review/test-review.component';
     TestPreviewComponent,
     TestComponent,
     TestReviewAllComponent,
-    TestReviewComponent
+    TestReviewComponent,
+    AnalizaPogledaComponent
   ],
   imports: [
     BrowserModule,

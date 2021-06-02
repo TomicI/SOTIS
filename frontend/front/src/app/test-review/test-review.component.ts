@@ -9,32 +9,32 @@ import {TestoviService} from "../services/testovi.service";
 })
 export class TestReviewComponent implements OnInit {
 
-  test : ReseniTest;
+  reseniTest : ReseniTest;
   brojBodova: number[];
 
   constructor(private testService : TestoviService) { }
 
   ngOnInit(): void
   {
-    this.test = JSON.parse(localStorage.getItem('test'));
+    this.reseniTest = JSON.parse(localStorage.getItem('test'));
 
     localStorage.removeItem('test');
 
-    this.brojBodova = new Array(this.test.test.pitanja.length) ;
+    this.brojBodova = new Array(this.reseniTest.test.pitanja.length) ;
 
-    console.log("Broj pitanja " + this.test.test.pitanja.length);
+    console.log("Broj pitanja " + this.reseniTest.test.pitanja.length);
 
-    console.log("Broj odgovora " + this.test.odgovorSet.length);
+    console.log("Broj odgovora " + this.reseniTest.odgovorSet.length);
 
-    for(let i = 0; i < this.test.test.pitanja.length; i++)
+    for(let i = 0; i < this.reseniTest.test.pitanja.length; i++)
     {
-      for (let j = 0; j < this.test.odgovorSet.length; j++)
+      for (let j = 0; j < this.reseniTest.odgovorSet.length; j++)
       {
-        if (this.test.odgovorSet[i].pid == this.test.test.pitanja[i].id)
+        if (this.reseniTest.odgovorSet[i].pid == this.reseniTest.test.pitanja[i].id)
         {
           console.log("Broj bodova od " + i + " pitanja ");
-          console.log(this.test.odgovorSet[i].brojBodova);
-          this.brojBodova[i] = this.test.odgovorSet[i].brojBodova;
+          console.log(this.reseniTest.odgovorSet[i].brojBodova);
+          this.brojBodova[i] = this.reseniTest.odgovorSet[i].brojBodova;
         }
       }
     }
@@ -44,11 +44,11 @@ export class TestReviewComponent implements OnInit {
   {
     let ret = "";
 
-    for (let i = 0; i < this.test.odgovorSet.length; i++)
+    for (let i = 0; i < this.reseniTest.odgovorSet.length; i++)
     {
-      if (this.test.odgovorSet[i].pid == pitanjeId)
+      if (this.reseniTest.odgovorSet[i].pid == pitanjeId)
       {
-        ret += this.test.odgovorSet[i].tekstOdgovora;
+        ret += this.reseniTest.odgovorSet[i].tekstOdgovora;
       }
     }
 
@@ -59,11 +59,11 @@ export class TestReviewComponent implements OnInit {
   {
     let ret = 0;
 
-    for (let i = 0; i < this.test.odgovorSet.length; i++)
+    for (let i = 0; i < this.reseniTest.odgovorSet.length; i++)
     {
-      if (this.test.odgovorSet[i].pid == pitanjeId)
+      if (this.reseniTest.odgovorSet[i].pid == pitanjeId)
       {
-        ret += this.test.odgovorSet[i].brojBodova;
+        ret += this.reseniTest.odgovorSet[i].brojBodova;
       }
     }
 
@@ -72,18 +72,18 @@ export class TestReviewComponent implements OnInit {
 
   finish()
   {
-    for (let i = 0; i < this.test.odgovorSet.length; i++)
+    for (let i = 0; i < this.reseniTest.odgovorSet.length; i++)
     {
       for(let j = 0; j < this.brojBodova.length; j++)
       {
-        if (this.test.odgovorSet[i].pid == this.test.test.pitanja[j].id)
+        if (this.reseniTest.odgovorSet[i].pid == this.reseniTest.test.pitanja[j].id)
         {
-          this.test.odgovorSet[i].brojBodova = this.brojBodova[i];
+          this.reseniTest.odgovorSet[i].brojBodova = this.brojBodova[i];
         }
       }
     }
 
-    this.testService.updateBodove(this.test).subscribe( data =>
+    this.testService.updateBodove(this.reseniTest).subscribe(data =>
     {
       console.log(data);
     })

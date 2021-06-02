@@ -89,7 +89,8 @@ export class QuestionPreviewComponent implements OnInit {
       console.log("DI");
       console.log(this.drawItems.length);
 
-      for(let i=0; i<this.drawItems.length; i++) {
+      for(let i=0; i<this.drawItems.length; i++)
+      {
         this.ctx.beginPath();
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 2
