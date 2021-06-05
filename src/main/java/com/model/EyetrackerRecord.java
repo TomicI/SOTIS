@@ -21,6 +21,7 @@ public class EyetrackerRecord
     @Column
     protected Double rightEyeY;
 
+
     public EyetrackerRecord() { }
 
     public EyetrackerRecord(Timestamp timestamp, Double leftEyeX, Double leftEyeY, Double rightEyeX, Double rightEyeY) {
@@ -90,4 +91,6 @@ public class EyetrackerRecord
     {
         this.rightEyeY = rightEyeY;
     }
+
+
 }

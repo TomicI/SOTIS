@@ -17,14 +17,17 @@ public class AnalizaPogleda
     protected Pitanje pitanje;
     @ManyToOne
     protected ReseniTest reseniTest;
+    @Column
+    protected Long regionId;
 
     public AnalizaPogleda() { }
 
-    public AnalizaPogleda(Double x, Double y, Pitanje pitanje, ReseniTest reseniTest) {
+    public AnalizaPogleda(Double x, Double y, Pitanje pitanje, ReseniTest reseniTest, Long regionId) {
         this.x = x;
         this.y = y;
         this.pitanje = pitanje;
         this.reseniTest = reseniTest;
+        this.regionId = regionId;
     }
 
     public Long getId() {
@@ -65,5 +68,15 @@ public class AnalizaPogleda
 
     public void setReseniTest(ReseniTest reseniTest) {
         this.reseniTest = reseniTest;
+    }
+
+    public Long getRegionId()
+    {
+        return regionId;
+    }
+
+    public void setRegionId(Long regionId)
+    {
+        this.regionId = regionId;
     }
 }

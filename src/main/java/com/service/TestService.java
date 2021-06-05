@@ -239,7 +239,7 @@ public class TestService {
                             {
                                 if (eyetrackerRecord.getLeftEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getLeftEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getLeftEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getLeftEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
-                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get());
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId());
                                     analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nL++;
                                 }
@@ -253,7 +253,7 @@ public class TestService {
 
                                 if (eyetrackerRecord.getRightEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getRightEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getRightEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getRightEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
-                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getRightEyeX(), eyetrackerRecord.getRightEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get());
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getRightEyeX(), eyetrackerRecord.getRightEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId());
                                     analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nR++;
                                 }

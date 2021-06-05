@@ -55,7 +55,5 @@ export class TestReviewAllComponent implements OnInit {
       console.log("blob")
       saveAs(blob, this.reseniTestovi[ii].ucenik.username + this.reseniTestovi[ii].id +  ".csv")
     });
-
-//    saveAs(blob, "file.csv")
   }
 }
