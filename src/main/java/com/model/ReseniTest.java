@@ -26,7 +26,7 @@ public class ReseniTest
     @OneToMany
     protected Set<Odgovor> odgovorSet;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany
     protected Set<EyetrackerRecord> records;
     @OneToMany(cascade = {CascadeType.ALL})
     protected Set<PitanjeTimestamp> pitanjeRecords;

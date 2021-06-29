@@ -10,20 +10,20 @@ public class EyetrackerRecord
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-    @Column
+    @Column(nullable = false)
     protected Timestamp timestamp;
-    @Column
+    @Column(nullable = false)
     protected Double leftEyeX;
-    @Column
+    @Column(nullable = false)
     protected Double leftEyeY;
-    @Column
+    @Column(nullable = false)
     protected Double rightEyeX;
-    @Column
+    @Column(nullable = false)
     protected Double rightEyeY;
 
 
     public EyetrackerRecord() { }
-
+/*
     public EyetrackerRecord(Timestamp timestamp, Double leftEyeX, Double leftEyeY, Double rightEyeX, Double rightEyeY) {
         this.timestamp = timestamp;
         this.leftEyeX = leftEyeX;
@@ -31,7 +31,7 @@ public class EyetrackerRecord
         this.rightEyeX = rightEyeX;
         this.rightEyeY = rightEyeY;
     }
-
+*/
     public Long getId()
     {
         return id;
@@ -93,4 +93,12 @@ public class EyetrackerRecord
     }
 
 
+    public void setAll(Timestamp timestamp, Double leftEyeX, Double leftEyeY, Double rightEyeX, Double rightEyeY)
+    {
+        this.timestamp = timestamp;
+        this.leftEyeX = leftEyeX;
+        this.leftEyeY = leftEyeY;
+        this.rightEyeX = rightEyeX;
+        this.rightEyeY = rightEyeY;
+    }
 }

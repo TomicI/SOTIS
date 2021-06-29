@@ -119,6 +119,7 @@ export class AnalizaPogleda
   y: number;
   pitanje: Pitanje;
   reseniTest: ReseniTest;
+  regionId: number;
 
   constructor() { }
 }

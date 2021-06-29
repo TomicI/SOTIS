@@ -1,6 +1,10 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table
@@ -15,19 +19,23 @@ public class AnalizaPogleda
     protected Double y;
     @ManyToOne
     protected Pitanje pitanje;
+    @JsonIgnore
     @ManyToOne
     protected ReseniTest reseniTest;
     @Column
     protected Long regionId;
+    @Column(nullable = false)
+    protected Timestamp timestamp;
 
     public AnalizaPogleda() { }
 
-    public AnalizaPogleda(Double x, Double y, Pitanje pitanje, ReseniTest reseniTest, Long regionId) {
+    public AnalizaPogleda(Double x, Double y, Pitanje pitanje, ReseniTest reseniTest, Long regionId, Timestamp timestamp) {
         this.x = x;
         this.y = y;
         this.pitanje = pitanje;
         this.reseniTest = reseniTest;
         this.regionId = regionId;
+        this.timestamp = timestamp;
     }
 
     public Long getId() {

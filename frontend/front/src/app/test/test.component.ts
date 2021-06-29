@@ -40,6 +40,7 @@ export class TestComponent implements OnInit {
       console.log(localStorage.getItem('test'));
 
       this.reseniTest = JSON.parse(localStorage.getItem('test'));
+      this.reseniTest.test.pitanja.sort((a,b) => a.redniBroj > b.redniBroj ? 1 : -1);
       this.test = this.reseniTest.test;
       this.ii = JSON.parse(localStorage.getItem('question'));
 

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface AnalizaPogledaRepository extends JpaRepository<AnalizaPogleda, Long>
 {
-    List<AnalizaPogleda> findByReseniTestId(Long reseniTestId);
+    List<AnalizaPogleda> findByReseniTestIdAndPitanjeIdOrderByTimestamp(Long reseniTestId, Long pitanjeId);
 }

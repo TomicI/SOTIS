@@ -89,12 +89,13 @@ export class TestoviService {
     return this.http.put<any>(this.baseUrl + 'updateBodove', object);
   }
 
-  getRegions(reseniTestId : number, username: string): Promise<AnalizaPogleda[]>
+  getRegions(reseniTestId : number, username: string, pitanjeId: number): Promise<AnalizaPogleda[]>
   {
     let param = new HttpParams();
 
     param = param.append('reseniTestId', String(reseniTestId));
-    param = param.append('username', username)
+    param = param.append('username', username);
+    param = param.append('pitanjeId', String(pitanjeId));
 
     return this.http.get<AnalizaPogleda[]>(this.baseUrl + 'getAnaliza', {params : param}).toPromise();
   }

@@ -35,12 +35,42 @@ export class AnalizaPogledaComponent implements OnInit {
     if(JSON.parse(localStorage.getItem('test')) != null)
     {
       this.reseniTest = JSON.parse(localStorage.getItem('test'));
-      localStorage.removeItem('test');
+      this.reseniTest.test.pitanja.sort((a,b) => a.redniBroj > b.redniBroj ? 1 : -1);
+      console.log("RESENI TEST ")
+      console.log(this.reseniTest);
 
+//    localStorage.removeItem('test');
+
+
+      if(JSON.parse(localStorage.getItem('brojPitanja')) != null)
+      {
+        this.brojPitanja = JSON.parse(localStorage.getItem('brojPitanja'));
+      }
+
+      this.testoviService.getRegions(this.reseniTest.id, this.tokenService.getUsername(), this.reseniTest.test.pitanja[this.brojPitanja].id).then( data => {
+        console.log("datadata");
+        console.log(data.length);
+        this.koordinate = data;
+
+        this.pitanje = this.reseniTest.test.pitanja[this.brojPitanja];
+
+        if (this.koordinate.length == 0)
+        {
+          alert("Ne postoje zabelezeni podaci o pogledima na ovom pitanju! ");
+        }
+        else
+        {
+          console.log("ELSE")
+          this.draw();
+        }
+      });
+
+    }
+/*
       this.testoviService.getRegions(this.reseniTest.id, this.tokenService.getUsername()).then( data =>
         {
           console.log("datadata");
-          console.log(data);
+          console.log(data.length);
           this.koordinate = data;
 
           if (this.koordinate.length == 0)
@@ -50,6 +80,7 @@ export class AnalizaPogledaComponent implements OnInit {
           }
           else
           {
+            console.log("ELSE")
             this.pitanje = this.koordinate[0].reseniTest.test.pitanja[this.brojPitanja];
             this.draw();
           }
@@ -70,6 +101,7 @@ export class AnalizaPogledaComponent implements OnInit {
       this.draw();
 
     }
+*/
 
     console.log("Pitanje");
     console.log(this.pitanje);
@@ -77,16 +109,43 @@ export class AnalizaPogledaComponent implements OnInit {
 
   draw()
   {
+    let currRId = -1;
+    let lineX, lineY = 0;
+    let regioniRedniBr = 1;
     for(let i=0; i<this.koordinate.length; i++)
     {
-      if(this.pitanje.id == this.koordinate[i].pitanje.id)
-      {
+      if(this.pitanje.id == this.koordinate[i].pitanje.id) {
+        if (currRId == -1)
+        {
+          currRId = this.koordinate[i].regionId;
+          lineX = this.koordinate[i].x*100;
+          lineY = this.koordinate[i].y*100;
+        }
+
         this.ctx.beginPath();
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 2;
-        this.ctx.rect(this.koordinate[i].x, this.koordinate[i].y, 1, 1);
+//      this.ctx.rect(this.koordinate[i].x * 100, this.koordinate[i].y * 100, 1, 1);
+        this.ctx.arc(this.koordinate[i].x * 100, this.koordinate[i].y * 100, 10, 0, 2 * Math.PI);
         this.ctx.stroke();
-        console.log("x " + this.koordinate[i].x + " y " + this.koordinate[i].y );
+
+        if(this.koordinate[i].regionId != currRId )
+        {
+          console.log("RAYLICIT JE " + currRId + " reg " + this.koordinate[i].regionId)
+          this.ctx.beginPath();
+          this.ctx.moveTo(lineX, lineY);
+          this.ctx.lineTo(this.koordinate[i].x*100, this.koordinate[i].y*100);
+          this.ctx.stroke();
+
+          this.ctx.font = "50px Arial";
+          this.ctx.fillStyle = "black";
+          this.ctx.fillText(regioniRedniBr,(lineX+this.koordinate[i].x*100)/2,(lineY+this.koordinate[i].y*100)/2);
+          regioniRedniBr++;
+
+          currRId = this.koordinate[i].regionId;
+          lineX = this.koordinate[i].x;
+          lineY = this.koordinate[i].y;
+        }
       }
     }
   }
@@ -98,8 +157,9 @@ export class AnalizaPogledaComponent implements OnInit {
 
   next()
   {
-    if (this.brojPitanja < this.koordinate[0].reseniTest.test.pitanja.length - 1)
+    if (this.brojPitanja < this.reseniTest.test.pitanja.length - 1)
     {
+      console.log("NEXT")
       localStorage.setItem('koordinate', JSON.stringify(this.koordinate));
       localStorage.setItem('brojPitanja', JSON.stringify(this.brojPitanja + 1));
       window.location.reload();
@@ -110,6 +170,7 @@ export class AnalizaPogledaComponent implements OnInit {
   {
     if (this.brojPitanja > 0 )
     {
+      console.log("BACK")
       localStorage.setItem('koordinate', JSON.stringify(this.koordinate));
       localStorage.setItem('brojPitanja', JSON.stringify(this.brojPitanja - 1));
       window.location.reload();

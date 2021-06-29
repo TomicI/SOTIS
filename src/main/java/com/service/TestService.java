@@ -4,6 +4,7 @@ import com.model.*;
 import com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
@@ -112,12 +113,15 @@ public class TestService {
 
             reseniTest.setBrojOstvarenihBodova(brojBodova);
 
+            reseniTest = reseniTestRepository.save(reseniTest);
+
             try {
                 reseniTest.setRecords(getData());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+            System.out.println("eyetracker record nazad " + reseniTest.getRecords().size() + " reseni test " + reseniTest.getId()) ;
             reseniTest = reseniTestRepository.save(reseniTest);
 
             analizeTest(reseniTest.getId());
@@ -196,7 +200,9 @@ public class TestService {
                 String[] data = row.split(",");
                 EyetrackerRecord eyetrackerRecord = null;
                 try {
-                    eyetrackerRecord = new EyetrackerRecord(new Timestamp((long) (Double.valueOf(data[1]) * 1000)), Double.valueOf(data[2]), Double.valueOf(data[3]), Double.valueOf(data[4]), Double.valueOf(data[5]));
+                    eyetrackerRecord = new EyetrackerRecord();
+                    eyetrackerRecord.setAll(new Timestamp((long) (Double.valueOf(data[1]) * 1000)), Double.valueOf(data[2]), Double.valueOf(data[3]), Double.valueOf(data[4]), Double.valueOf(data[5]));
+
                     eyetrackerRecord = eyetrackerRecordRepository.save(eyetrackerRecord);
                 } catch (Exception e) {
                     System.out.println("DATA MISSING !");
@@ -204,7 +210,7 @@ public class TestService {
                 }
                 if (eyetrackerRecord != null)
                 {
-                    System.out.println("eyetracker record " + eyetrackerRecord.getId()) ;
+                    System.out.println("eyetracker record " + eyetrackerRecord.getId() + " timestamp " + eyetrackerRecord.getTimestamp()) ;
                     records.add(eyetrackerRecord);
                 }
 
@@ -215,6 +221,7 @@ public class TestService {
         }
         csvReader.close();
 
+        System.out.println("eyetracker records sum " + n + " in records " + records.size()) ;
         return records;
     }
 
@@ -239,31 +246,32 @@ public class TestService {
                             {
                                 if (eyetrackerRecord.getLeftEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getLeftEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getLeftEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getLeftEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
-                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId());
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId(), eyetrackerRecord.getTimestamp());
                                     analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nL++;
                                 }
-                                else
+/*                              else
                                 {
                                     System.out.println("Left Eye x " + eyetrackerRecord.getLeftEyeX());
                                     System.out.println("Left Eye y " + eyetrackerRecord.getLeftEyeY());
                                     System.out.println("Regioni Xo, Yo " +  regioni.getX0() + ", " + regioni.getY0());
                                     System.out.println("Regioni w, h " + regioni.getWidth() + ", " + regioni.getHeight());
                                 }
-
+*/
                                 if (eyetrackerRecord.getRightEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getRightEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getRightEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getRightEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
-                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getRightEyeX(), eyetrackerRecord.getRightEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId());
+                                    AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getRightEyeX(), eyetrackerRecord.getRightEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId(), eyetrackerRecord.getTimestamp());
                                     analizaPogleda = analizaPogledaRepository.save(analizaPogleda);
                                     nR++;
                                 }
-                                else
+/*                              else
                                 {
                                     System.out.println("Right Eye x " + eyetrackerRecord.getRightEyeX());
                                     System.out.println("Right Eye y " + eyetrackerRecord.getRightEyeY());
                                     System.out.println("Regioni Xo, Yo " +  regioni.getX0() + ", " + regioni.getY0());
                                     System.out.println("Regioni w, h " + regioni.getWidth() + ", " + regioni.getHeight());
                                 }
+*/
                             }
                         }
                     }
@@ -274,11 +282,11 @@ public class TestService {
         System.out.println("Left Eye in region " + nL);
         System.out.println("Right Eye in region " + nR);
     }
-
-    public List<AnalizaPogleda> getRegions(Long reseniTestId)
+    //Pitanje
+    public List<AnalizaPogleda> getRegions(Long reseniTestId, Long pitanjeId)
     {
- //     analizeTest(reseniTestId);
-        return analizaPogledaRepository.findByReseniTestId(reseniTestId);
+        analizeTest(reseniTestId);
+        return analizaPogledaRepository.findByReseniTestIdAndPitanjeIdOrderByTimestamp(reseniTestId, pitanjeId);
     }
 
     public List<ReseniTest> getUradjene(User u) {

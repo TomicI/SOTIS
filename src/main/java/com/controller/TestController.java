@@ -180,7 +180,7 @@ public class TestController
     }
 
     @RequestMapping(value = "/getAnaliza", method = RequestMethod.GET)
-    public ResponseEntity<List<AnalizaPogleda>> getRegions(@RequestParam(value="reseniTestId") Long reseniTestId, @RequestParam(value="username") String username)
+    public ResponseEntity<List<AnalizaPogleda>> getRegions(@RequestParam(value="reseniTestId") Long reseniTestId, @RequestParam(value="username") String username, @RequestParam(value="pitanjeId") Long pitanjeId)
     {
         User user = userService.getCurrentUser(username);
 
@@ -188,7 +188,9 @@ public class TestController
             return (ResponseEntity<List<AnalizaPogleda>>) ResponseEntity.badRequest();
         else
         {
-            List<AnalizaPogleda> ap = testService.getRegions(reseniTestId);
+            List<AnalizaPogleda> ap = testService.getRegions(reseniTestId, pitanjeId);
+
+            System.out.println("regioni " + ap.size());
 
             if (ap == null)
                 return (ResponseEntity<List<AnalizaPogleda>>) ResponseEntity.badRequest();
