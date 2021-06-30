@@ -27,81 +27,86 @@ export class TestComponent implements OnInit {
   {
   }
 
-  ngOnInit(): void
-  {
-    if (this.tokenService.getUsername() == null)
-    {
+  ngOnInit(): void {
+    if (this.tokenService.getUsername() == null) {
       alert("Morate biti ulogovani!");
       window.location.replace('/sign_in');
     }
 
-    if (localStorage.getItem('test'))
-    {
+    if (localStorage.getItem('test')) {
       console.log(localStorage.getItem('test'));
 
       this.reseniTest = JSON.parse(localStorage.getItem('test'));
-      this.reseniTest.test.pitanja.sort((a,b) => a.redniBroj > b.redniBroj ? 1 : -1);
+      this.reseniTest.test.pitanja.sort((a, b) => a.redniBroj > b.redniBroj ? 1 : -1);
       this.test = this.reseniTest.test;
+
+
+      console.log("Sortitana piranja");
+      console.log(this.test);
       this.ii = JSON.parse(localStorage.getItem('question'));
 
-      console.log(`reseni odgovri ` );
+      console.log(`reseni odgovri `);
       console.log(this.reseniTest.odgovorSet);
 
       console.log(`Ovdeeeeeeee` + this.ii);
 
 
-      if (this.reseniTest.pitanjeRecords == null)
-      {
+      if (this.reseniTest.pitanjeRecords == null) {
         this.reseniTest.pitanjeRecords = new Array();
-        var pitanjeTimestamp: PitanjeTimestamp = new PitanjeTimestamp(Date.now(), this.question);
+        var pitanjeTimestamp: PitanjeTimestamp = new PitanjeTimestamp(Date.now(), this.reseniTest.test.pitanja[this.ii]);
 
         this.reseniTest.pitanjeRecords.push(pitanjeTimestamp);
       }
-    }
-    else
-    {
+    } else {
       this.route.params.subscribe
-           ( params =>  { const id = params['id'];
-           if (id != null) {
-             console.log(`Test with id '${id}' `);
-             this.testService.getTest(id, this.tokenService.getUsername()).subscribe(Rtest =>
-             {
-               if (Rtest)
-               {
-                 this.reseniTest = Rtest;
-                 this.reseniTest.odgovorSet = [];
-                 this.test = this.reseniTest.test;
+      (params => {
+        const id = params['id'];
+        if (id != null) {
+          console.log(`Test with id '${id}' `);
+          this.testService.getTest(id, this.tokenService.getUsername()).subscribe(Rtest => {
+              if (Rtest) {
+                this.reseniTest = Rtest;
+                this.reseniTest.odgovorSet = [];
+                this.test = this.reseniTest.test;
 
-                 this.ii = 0;
-                 var pitanje: Pitanje = new Pitanje();
-                 pitanje.tekstPitanja = "Odgovori";
-                 this.test.pitanja.push(pitanje);
-                 this.reseniTest.test = this.test;
+                this.ii = 0;
+                var pitanje: Pitanje = new Pitanje();
+                pitanje.tekstPitanja = "Odgovori";
+                pitanje.redniBroj = 99999;
+                this.test.pitanja.push(pitanje);
+                this.reseniTest.test = this.test;
 
-                 localStorage.setItem("test", JSON.stringify(this.reseniTest));
-                 localStorage.setItem("question", JSON.stringify(0));
+                localStorage.setItem("test", JSON.stringify(this.reseniTest));
+                localStorage.setItem("question", JSON.stringify(0));
 
-                 window.location.reload();
-               }
-               else
-               {
-                 console.log(`Test with id '${id}' not found `);
-               }
+                window.location.reload();
+              } else {
+                console.log(`Test with id '${id}' not found `);
+              }
 
-             },
-               error => {
-                 console.log(error);
-                 alert("Ovaj test je vec radjen!");
-                 localStorage.clear();
-                 window.location.replace('/profile');
-               });
-           }
-         });
+            },
+            error => {
+              console.log(error);
+              alert("Ovaj test je vec radjen!");
+              localStorage.clear();
+              window.location.replace('/profile');
+            });
+        }
+      });
     }
 
     this.question = this.reseniTest.test.pitanja[this.ii];
 
-    this.odgovoriI = this.question.odgovori.length;
+    if (this.question.odgovori != undefined)
+      this.odgovoriI = this.question.odgovori.length;
+    else
+    {
+      this.question.odgovori = new Array();
+      this.odgovoriI = 0;
+    }
+
+
+
 
     if (this.question.odgovori != null && this.question.odgovori.length <= 1)
     {
@@ -121,15 +126,16 @@ export class TestComponent implements OnInit {
     }
     else
     {
-      this.isChecked = new Array(this.question.odgovori.length).fill(false);
-      for (let i = 0; i < this.test.pitanja[this.ii].odgovori.length; i++)
-      {
-        for (let j = 0; j < this.reseniTest.odgovorSet.length; j++)
-        {
-          if (this.reseniTest.odgovorSet[j].id == this.test.pitanja[this.ii].odgovori[i].id)
-          {
-            console.log("true");
-            this.isChecked[i] = true;
+
+      if(this.question.odgovori != undefined) {
+        this.isChecked = new Array(this.question.odgovori.length).fill(false);
+
+        for (let i = 0; i < this.test.pitanja[this.ii].odgovori.length; i++) {
+          for (let j = 0; j < this.reseniTest.odgovorSet.length; j++) {
+            if (this.reseniTest.odgovorSet[j].id == this.test.pitanja[this.ii].odgovori[i].id) {
+              console.log("true");
+              this.isChecked[i] = true;
+            }
           }
         }
       }
@@ -138,7 +144,7 @@ export class TestComponent implements OnInit {
 
   next()
   {
-    if (this.ii < this.test.pitanja.length - 2)
+    if (this.ii < this.test.pitanja.length - 1 && this.test.pitanja[this.ii + 1].tekstPitanja != "Odgovori")
     {
 
       this.saveTimestamp();
@@ -151,7 +157,7 @@ export class TestComponent implements OnInit {
 
   back()
   {
-    if (this.ii > 0 )
+    if (this.ii > 0 && this.test.pitanja[this.ii - 1].tekstPitanja != "Odgovori")
     {
 
       this.saveTimestamp();
@@ -183,13 +189,15 @@ export class TestComponent implements OnInit {
   {
     if (this.question.odgovori == null || this.question.odgovori.length <= 1)
     {
-      console.log("tekst odgovora");
+      console.log("##########################tekst odgovora");
       console.log(this.tekstOdgovora);
 
       var odg: Odgovor = new Odgovor();
       odg.tekstOdgovora = this.tekstOdgovora;
 
-      if (this.question.odgovori.length == 1)
+      console.log("##########################tekst odgovora length ");
+      console.log(this.question.odgovori.length);
+      if ( this.question.odgovori.length == 1)
       {
         this.test.pitanja[this.ii].odgovori[0].tekstOdgovora = odg.tekstOdgovora;
       }
@@ -204,8 +212,11 @@ export class TestComponent implements OnInit {
 
   finish()
   {
-    this.saveTimestamp();
-    this.check();
+    if (this.reseniTest.pitanjeRecords != null && this.reseniTest.pitanjeRecords.length > 0 )
+    {
+      this.reseniTest.pitanjeRecords[this.reseniTest.pitanjeRecords.length - 1].timestampEnd = Date.now();
+    }
+      this.check();
 
     for (let i = 0; i < this.test.pitanja.length; i++)
     {
@@ -224,8 +235,8 @@ export class TestComponent implements OnInit {
     this.testService.reseniTest(this.reseniTest).subscribe( data =>
     {
       console.log(data);
-      localStorage.removeItem("test");
-      localStorage.removeItem("question");
+      localStorage.clear();
+      window.location.replace('/profile');
     })
   }
 

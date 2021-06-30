@@ -231,6 +231,8 @@ public class TestService {
         int nL = 0;
         int nR = 0;
 
+        System.out.println("################reseni test " + reseniTest.get().getRecords().size());
+
         if(reseniTest.isPresent())
         {
             if(!reseniTest.get().getRecords().isEmpty())
@@ -244,6 +246,27 @@ public class TestService {
 
                             for (Regioni regioni : pitanjeTimestamp.getPitanje().getRegioni())
                             {
+/*                              if(eyetrackerRecord.getLeftEyeX() == null)
+                                {
+                                    System.out.println("LEFT X NULL");
+                                }else if(regioni.getX0() == null)
+                                {
+                                    System.out.println("region X0  NULL");
+                                }else if(regioni.getWidth() == null)
+                                {
+                                    System.out.println("region Width  NULL");
+                                } else if(eyetrackerRecord.getLeftEyeY() == null)
+                                {
+                                    System.out.println("LEFT Y NULL");
+                                }else if(regioni.getY0() == null)
+                                {
+                                    System.out.println("region Y0  NULL");
+                                }else if(regioni.getHeight() == null)
+                                {
+                                    System.out.println("region Height  NULL");
+                                }
+
+ */
                                 if (eyetrackerRecord.getLeftEyeX()*100 >= regioni.getX0() && eyetrackerRecord.getLeftEyeX()*100 <= (regioni.getX0() + regioni.getWidth()) && eyetrackerRecord.getLeftEyeY()*100 >= regioni.getY0() && eyetrackerRecord.getLeftEyeY()*100 <= (regioni.getY0() + regioni.getHeight()))
                                 {
                                     AnalizaPogleda analizaPogleda = new AnalizaPogleda(eyetrackerRecord.getLeftEyeX(), eyetrackerRecord.getLeftEyeY(), pitanjeTimestamp.getPitanje(), reseniTest.get(), regioni.getId(), eyetrackerRecord.getTimestamp());

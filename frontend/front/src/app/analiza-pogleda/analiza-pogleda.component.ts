@@ -14,6 +14,8 @@ export class AnalizaPogledaComponent implements OnInit {
   canvas;
   ctx;
 
+  colors = [ "red", "yellow", "green", "orange", "pink", "black", "purple", "navy", "violet", "gold", "lime", "aqua", "teal", "coral", "brown"];
+
   reseniTest: ReseniTest;
   koordinate: AnalizaPogleda[];
 
@@ -112,6 +114,8 @@ export class AnalizaPogledaComponent implements OnInit {
     let currRId = -1;
     let lineX, lineY = 0;
     let regioniRedniBr = 1;
+    let color = "blue";
+
     for(let i=0; i<this.koordinate.length; i++)
     {
       if(this.pitanje.id == this.koordinate[i].pitanje.id) {
@@ -123,7 +127,7 @@ export class AnalizaPogledaComponent implements OnInit {
         }
 
         this.ctx.beginPath();
-        this.ctx.strokeStyle = "black";
+        this.ctx.strokeStyle = color;
         this.ctx.lineWidth = 2;
 //      this.ctx.rect(this.koordinate[i].x * 100, this.koordinate[i].y * 100, 1, 1);
         this.ctx.arc(this.koordinate[i].x * 100, this.koordinate[i].y * 100, 10, 0, 2 * Math.PI);
@@ -133,18 +137,25 @@ export class AnalizaPogledaComponent implements OnInit {
         {
           console.log("RAYLICIT JE " + currRId + " reg " + this.koordinate[i].regionId)
           this.ctx.beginPath();
+          this.ctx.strokeStyle = color;
           this.ctx.moveTo(lineX, lineY);
           this.ctx.lineTo(this.koordinate[i].x*100, this.koordinate[i].y*100);
           this.ctx.stroke();
 
           this.ctx.font = "50px Arial";
-          this.ctx.fillStyle = "black";
+          this.ctx.fillStyle = color;
           this.ctx.fillText(regioniRedniBr,(lineX+this.koordinate[i].x*100)/2,(lineY+this.koordinate[i].y*100)/2);
           regioniRedniBr++;
 
           currRId = this.koordinate[i].regionId;
-          lineX = this.koordinate[i].x;
-          lineY = this.koordinate[i].y;
+          lineX = this.koordinate[i].x*100;
+          lineY = this.koordinate[i].y*100;
+
+        }
+        if (i + 1 < this.koordinate.length && this.koordinate[i+1].regionId != currRId)
+        {
+          color = this.colors[Math.floor(Math.random()*15)]
+          console.log( " color value " + color)
         }
       }
     }
@@ -152,7 +163,8 @@ export class AnalizaPogledaComponent implements OnInit {
 
   done()
   {
-
+    localStorage.clear();
+    window.location.replace('/profile');
   }
 
   next()

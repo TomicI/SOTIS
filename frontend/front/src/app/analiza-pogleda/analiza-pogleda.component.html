@@ -7,7 +7,7 @@
 
   <div  style="align-content: center">
     <div class="card-body">
-      <h5 class="card-title text-center">{{this.pitanje.tekstPitanja}}</h5>
+      <h5 class="card-title text-center" >{{this.pitanje.tekstPitanja}}</h5>
       <div *ngIf="this.pitanje.odgovori!=null" style="align-content: center">
         <div *ngFor="let odg of this.pitanje.odgovori; let i = index" >
           <div>{{i+1}}) {{odg.tekstOdgovora}} </div>
